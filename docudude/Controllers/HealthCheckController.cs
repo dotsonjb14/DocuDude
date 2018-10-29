@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using docudude.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace docudude.Controllers
 {
@@ -12,9 +13,23 @@ namespace docudude.Controllers
     [ApiController]
     public class HealthCheckController : ControllerBase
     {
-        public ActionResult<string> Get()
+        IConfiguration configuration;
+
+        public HealthCheckController(IConfiguration configuration) 
         {
-            return "ok";
+            this.configuration = configuration;
         }
+        public ActionResult<HealthCheckData> Get()
+        {
+            return new HealthCheckData() 
+            {
+                Profile = configuration.GetValue<string>("s3:AwsProfile")
+            };
+        }
+    }
+
+    public class HealthCheckData 
+    {
+        public string Profile { get; set; }
     }
 }
