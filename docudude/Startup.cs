@@ -1,4 +1,6 @@
-﻿using docudude.Repositories;
+﻿using System;
+using docudude.Models;
+using docudude.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,13 +38,24 @@ namespace docudude
 
             services.AddTransient<IDocumentRepository, DocumentRepository>();
             services.AddTransient<IS3Repository, S3Repository>();
+            services.AddSingleton<Whitelists>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Whitelists whitelists)
         {
+            whitelists.SetWhiteList(
+                Environment.GetEnvironmentVariable("PDF_WHITELIST"),
+                WhiteListType.PDF
+            );
+
+            whitelists.SetWhiteList(
+                Environment.GetEnvironmentVariable("IMAGE_WHITELIST"),
+                WhiteListType.Image
+            );
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -41,6 +41,7 @@ You can deploy this outside of ECS, however your milage may vary, and you will p
 
 In no particular order
 
+* Whitelist of buckets (this will be first)
 * Adding PDFs to PDFs
 * Digital Signing
 * Adding Images to PDFs

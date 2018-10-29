@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using docudude.Models;
 using docudude.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,23 +14,27 @@ namespace docudude.Controllers
     [ApiController]
     public class HealthCheckController : ControllerBase
     {
-        IConfiguration configuration;
+        private readonly IConfiguration configuration;
+        private readonly Whitelists whitelists;
 
-        public HealthCheckController(IConfiguration configuration) 
+        public HealthCheckController(IConfiguration configuration, Whitelists whitelists) 
         {
             this.configuration = configuration;
+            this.whitelists = whitelists;
         }
         public ActionResult<HealthCheckData> Get()
         {
             return new HealthCheckData() 
             {
-                Profile = configuration.GetValue<string>("s3:AwsProfile")
+                PDFBuckets = whitelists.PDFBuckets,
+                ImageBuckets = whitelists.ImageBuckets
             };
         }
     }
 
     public class HealthCheckData 
     {
-        public string Profile { get; set; }
+        public List<string> PDFBuckets { get; internal set; }
+        public List<string> ImageBuckets { get; internal set; }
     }
 }
