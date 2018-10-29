@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using THT.AWS.Abstractions.Credentials;
 using THT.AWS.Abstractions.Options;
 using THT.AWS.Abstractions.S3;
 
@@ -22,6 +23,7 @@ namespace docudude
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<S3Options>(Configuration.GetSection("s3"));
+            services.AddTransient<ICrendentialsManager, CrendentialsManager>();
 
             if (Configuration.GetValue("IsLocal", false))
             {

@@ -8,6 +8,7 @@
     <Folder Include="wwwroot\" />
     <Content Include="Dockerfile" CopyToPublishDirectory="always" />
     <Content Include="transform.sh" CopyToPublishDirectory="always" />
+    <Content Include="run.sh" CopyToPublishDirectory="always" />
   </ItemGroup>
 
   <ItemGroup>
