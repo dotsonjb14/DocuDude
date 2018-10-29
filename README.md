@@ -25,7 +25,7 @@ Please follow these steps to run locally
 
 enter the docudude folder and run these commands
 ```
-dotnet publish -c Release -o pub
+rm -rf pub && dotnet publish -c Release -o pub
 sudo docker build --no-cache -t docuparent pub
 ```
 

@@ -1,3 +1,5 @@
 #!/usr/bin/bash
 
-echo $DOT > outfile
+sed -i "s/{{AWS_PROFILE}}/$AWS_PROFILE/" appsettings.json
+
+echo "using $AWS_PROFILE"
