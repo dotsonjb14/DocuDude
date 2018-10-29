@@ -19,7 +19,7 @@ What this means, is put it in a VPC, and do not allow external connections whats
 
 If you ignore this warning, then you are a moron that deserves to get owned.
 
-## Running
+## Running Locally
 
 Please follow these steps to run locally
 
@@ -35,3 +35,9 @@ enter the example-docker folder and run these commands
 sudo docker build --no-cache -t docuchild .
 sudo docker run -p 80:80 docuchild
 ```
+
+## Deploying
+
+This system is meant to be deployed via ECS. The entry point being `./run.sh` the working directory being `/app`. It requires that the ECS task be given a role that has access to the required S3 buckets.
+
+You can deploy this outside of ECS, however your milage may vary. Use the example-docker as an example on usage.
