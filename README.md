@@ -24,10 +24,14 @@ If you ignore this warning, then you are a moron that deserves to get owned.
 Please follow these steps to run locally
 
 enter the docudude folder and run these commands
-`dotnet publish -c Release -o pub`
-`sudo docker build --no-cache -t docuparent pub`
+```
+dotnet publish -c Release -o pub
+sudo docker build --no-cache -t docuparent pub
+```
 
 enter the example-docker folder and run these commands
 
-`sudo docker build --no-cache -t docuchild .`
-`sudo docker run -p 80:80 docuchild`
+```
+sudo docker build --no-cache -t docuchild .
+sudo docker run -p 80:80 docuchild
+```
