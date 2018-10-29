@@ -26,18 +26,13 @@ Please follow these steps to run locally
 enter the docudude folder and run these commands
 ```
 rm -rf pub && dotnet publish -c Release -o pub
-sudo docker build --no-cache -t docuparent pub
+sudo docker build --no-cache -t docudude pub
+sudo docker run -p 80:80 docudude
 ```
 
-enter the example-docker folder and run these commands
-
-```
-sudo docker build --no-cache -t docuchild .
-sudo docker run -p 80:80 docuchild
-```
 
 ## Deploying
 
-This system is meant to be deployed via ECS. The entry point being `./run.sh` the working directory being `/app`. It requires that the ECS task be given a role that has access to the required S3 buckets.
+This system is meant to be deployed via ECS. Making sure to map port 80 to port 80. It requires that the ECS task be given a role that has access to the required S3 buckets.
 
-You can deploy this outside of ECS, however your milage may vary. Use the example-docker as an example on usage.
+You can deploy this outside of ECS, however your milage may vary, and you will probably need a custom docker file.

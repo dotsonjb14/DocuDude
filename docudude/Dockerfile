@@ -1,4 +1,8 @@
-from microsoft/dotnet:2.1-aspnetcore-runtime
+# note, this doesn't work
+from microsoft/dotnet:2.1-sdk as pub
 
-copy . /app
+COPY . /app
+
 workdir /app
+
+run dotnet restore "docudude.csproj"

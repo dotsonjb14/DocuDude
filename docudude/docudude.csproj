@@ -1,14 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-  </PropertyGroup>
+  </PropertyGroup> 
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
     <Content Include="Dockerfile" CopyToPublishDirectory="always" />
-    <Content Include="transform.sh" CopyToPublishDirectory="always" />
-    <Content Include="run.sh" CopyToPublishDirectory="always" />
+    <Content Include="builtDockerfile" CopyToPublishDirectory="always" />
   </ItemGroup>
 
   <ItemGroup>
