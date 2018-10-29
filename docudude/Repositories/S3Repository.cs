@@ -3,7 +3,7 @@ using THT.AWS.Abstractions.S3;
 
 namespace docudude.Repositories
 {
-    public class S3Repository
+    public class S3Repository : IS3Repository
     {
         private readonly IFileWrapper fileWrapper;
 

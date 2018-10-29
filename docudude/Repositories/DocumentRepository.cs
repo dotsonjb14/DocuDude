@@ -7,18 +7,17 @@ using System.IO;
 
 namespace docudude.Repositories
 {
-    public class DocumentRepository
+    public class DocumentRepository : IDocumentRepository
     {
         public byte[] Perform(Input input, byte[] file)
         {
             using (var outputStream = new MemoryStream())
             using (var inputStream = new MemoryStream(file))
+            using (var writer = new PdfWriter(outputStream))
+            using (var reader = new PdfReader(inputStream))
+            using (var pdfDoc = new PdfDocument(reader, writer))
+            using (var doc = new Document(pdfDoc))
             {
-                var writer = new PdfWriter(outputStream);
-                var reader = new PdfReader(inputStream);
-                var pdfDoc = new PdfDocument(reader, writer);
-                var doc = new Document(pdfDoc);
-
                 foreach(var step in input.Steps)
                 {
                     var data = step.GetData<TextInputData>();
@@ -41,28 +40,11 @@ namespace docudude.Repositories
             }
         }
 
-        private static float GetBottom(TextInputData data, PdfPage page)
+        private float GetBottom(TextInputData data, PdfPage page)
         {
             var height = page.GetCropBox().GetHeight();
             var bottom = height - data.Top;
             return bottom;
-        }
-
-        public void GenerateTestDoc()
-        {
-            using (var outputStream = new MemoryStream())
-            {
-                var writer = new PdfWriter(outputStream);
-                var doc = new PdfDocument(writer);
-
-                var page = doc.AddNewPage();
-
-                var document = new Document(doc);
-
-                document.Close();
-
-                File.WriteAllBytes("c:\\dev\\blank.pdf", outputStream.ToArray());
-            }
         }
     }
 }

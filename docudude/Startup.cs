@@ -34,8 +34,8 @@ namespace docudude
                 services.AddTransient<IFileWrapper, S3FileWrapper>();
             }
 
-            services.AddTransient<DocumentRepository>();
-            services.AddTransient<S3Repository>();
+            services.AddTransient<IDocumentRepository, DocumentRepository>();
+            services.AddTransient<IS3Repository, S3Repository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

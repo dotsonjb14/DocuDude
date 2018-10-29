@@ -15,10 +15,10 @@ namespace docudude.Controllers
     [ApiController]
     public class DocumentController : ControllerBase
     {
-        private readonly DocumentRepository documentRepository;
-        private readonly S3Repository s3Repository;
+        private readonly IDocumentRepository documentRepository;
+        private readonly IS3Repository s3Repository;
 
-        public DocumentController(DocumentRepository documentRepository, S3Repository s3Repository)
+        public DocumentController(IDocumentRepository documentRepository, IS3Repository s3Repository)
         {
             this.documentRepository = documentRepository;
             this.s3Repository = s3Repository;
