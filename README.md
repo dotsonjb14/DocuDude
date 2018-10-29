@@ -36,3 +36,11 @@ sudo docker run -p 80:80 docudude
 This system is meant to be deployed via ECS. Making sure to map port 80 to port 80. It requires that the ECS task be given a role that has access to the required S3 buckets.
 
 You can deploy this outside of ECS, however your milage may vary, and you will probably need a custom docker file.
+
+## Upcoming Features
+
+In no particular order
+
+* Adding PDFs to PDFs
+* Digital Signing
+* Adding Images to PDFs
