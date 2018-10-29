@@ -18,3 +18,16 @@ Please, for the love of all that is holy, do not run this in a way that's public
 What this means, is put it in a VPC, and do not allow external connections whatsoever. I would not even trust whitelisting.
 
 If you ignore this warning, then you are a moron that deserves to get owned.
+
+## Running
+
+Please follow these steps to run locally
+
+enter the docudude folder and run these commands
+`dotnet publish -c Release -o pub`
+`sudo docker build --no-cache -t docuparent pub`
+
+enter the example-docker folder and run these commands
+
+`sudo docker build --no-cache -t docuchild .`
+`sudo docker run -p 80:80 docuchild`
