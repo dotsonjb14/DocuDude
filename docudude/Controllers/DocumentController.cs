@@ -35,9 +35,9 @@ namespace docudude.Controllers
                 return Forbid();
             }
 
-            var source = await s3Repository.GetDocument(input.SourceBucket, input.sourceFile);
+            var source = await s3Repository.GetDocument(input.SourceBucket, input.SourceFile);
 
-            var output = documentRepository.Perform(input, source);
+            var output = documentRepository.Transform(input, source);
 
             return File(output, "application/pdf", Guid.NewGuid().ToString() + ".pdf");
         }

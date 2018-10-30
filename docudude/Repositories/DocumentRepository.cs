@@ -9,7 +9,7 @@ namespace docudude.Repositories
 {
     public class DocumentRepository : IDocumentRepository
     {
-        public byte[] Perform(Input input, byte[] file)
+        public byte[] Transform(Input input, byte[] file)
         {
             using (var outputStream = new MemoryStream())
             using (var inputStream = new MemoryStream(file))
@@ -21,20 +21,15 @@ namespace docudude.Repositories
                 foreach(var step in input.Steps)
                 {
                     var data = step.GetData<TextInputData>();
-                    var page = pdfDoc.GetPage(data.Page);
-                    float bottom = GetBottom(data, page);
+                    float bottom = GetBottom(data, pdfDoc.GetPage(data.Page));
 
                     var text = new Text(data.Content)
                         .SetFontSize(data.FontSize);
 
-                    Paragraph p = new Paragraph(text);
-
-                    p.SetPageNumber(data.Page)
-                        .SetFixedPosition(data.Left, bottom, 500);
-                    doc.Add(p);
+                    doc.Add(new Paragraph(text)
+                        .SetPageNumber(data.Page)
+                        .SetFixedPosition(data.Left, bottom, 500));
                 }
-
-                doc.Close();
 
                 return outputStream.ToArray();
             }

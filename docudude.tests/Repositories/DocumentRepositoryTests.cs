@@ -22,7 +22,7 @@ namespace docudude.tests.Repositories
 
             var documentRepo = new DocumentRepository();
 
-            var outDoc = documentRepo.Perform(input, testDoc);
+            var outDoc = documentRepo.Transform(input, testDoc);
         }
 
         [Fact(Skip = "meh")]
@@ -38,7 +38,7 @@ namespace docudude.tests.Repositories
 
             var documentRepo = new DocumentRepository();
 
-            var outDoc = documentRepo.Perform(input, testDoc);
+            var outDoc = documentRepo.Transform(input, testDoc);
         }
 
         private byte[] GenerateTestDoc()

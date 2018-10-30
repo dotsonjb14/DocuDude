@@ -39,6 +39,8 @@ This system is meant to be deployed via ECS. Making sure to map port 80 to port 
 
 You can deploy this outside of ECS, however your milage may vary, and you will probably need a custom docker file.
 
+The healthcheck endpoint is /api/healthcheck, I use `CMD-SHELL, curl -f http://localhost/api/healthcheck || exit 1` for the check.
+
 ## Upcoming Features
 
 In no particular order
