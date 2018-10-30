@@ -13,18 +13,22 @@ namespace docudude.Models
         public List<string> PDFBuckets { get; set; } = new List<string>();
         public List<string> ImageBuckets { get; set; } = new List<string>();
 
-        public bool CanAccess(string bucket, WhiteListType bucketType)
+        public bool CanAccess(string bucket, WhiteListType whiteListType)
         {
-            List<string> list = GetBucketList(bucketType);
+            List<string> list = GetBucketList(whiteListType);
 
             return list.Count == 0 || list.Contains(bucket);
         }
 
-        public void SetWhiteList(string rawList, WhiteListType bucketType)
+        public void SetWhiteList(string rawList, WhiteListType whiteListType)
         {
-            List<string> list = GetBucketList(bucketType);
+            List<string> list = GetBucketList(whiteListType);
+            if(!string.IsNullOrWhiteSpace(rawList))
+            {
+                list.AddRange((rawList ?? "").Split("|"));
+            }
 
-            list.AddRange((rawList ?? "").Split("|"));
+            
         }
 
         private List<string> GetBucketList(WhiteListType bucketType)
