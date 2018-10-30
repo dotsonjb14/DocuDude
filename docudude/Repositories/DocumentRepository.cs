@@ -12,23 +12,25 @@ namespace docudude.Repositories
         public byte[] Transform(Input input, byte[] file)
         {
             using (var outputStream = new MemoryStream())
-            using (var inputStream = new MemoryStream(file))
-            using (var writer = new PdfWriter(outputStream))
-            using (var reader = new PdfReader(inputStream))
-            using (var pdfDoc = new PdfDocument(reader, writer))
-            using (var doc = new Document(pdfDoc))
             {
-                foreach(var step in input.Steps)
+                using (var inputStream = new MemoryStream(file))
+                using (var writer = new PdfWriter(outputStream))
+                using (var reader = new PdfReader(inputStream))
+                using (var pdfDoc = new PdfDocument(reader, writer))
+                using (var doc = new Document(pdfDoc))
                 {
-                    var data = step.GetData<TextInputData>();
-                    float bottom = GetBottom(data, pdfDoc.GetPage(data.Page));
+                    foreach(var step in input.Steps)
+                    {
+                        var data = step.GetData<TextInputData>();
+                        float bottom = GetBottom(data, pdfDoc.GetPage(data.Page));
 
-                    var text = new Text(data.Content)
-                        .SetFontSize(data.FontSize);
+                        var text = new Text(data.Content)
+                            .SetFontSize(data.FontSize);
 
-                    doc.Add(new Paragraph(text)
-                        .SetPageNumber(data.Page)
-                        .SetFixedPosition(data.Left, bottom, 500));
+                        doc.Add(new Paragraph(text)
+                            .SetPageNumber(data.Page)
+                            .SetFixedPosition(data.Left, bottom, 500));
+                    }
                 }
 
                 return outputStream.ToArray();
