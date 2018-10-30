@@ -1,8 +1,7 @@
-# note, this doesn't work
-from microsoft/dotnet:2.1-sdk as pub
+FROM microsoft/dotnet:2.1-sdk as pub
 
 COPY . /app
 
-workdir /app
+WORKDIR /app
 
-run dotnet restore "docudude.csproj"
+RUN dotnet restore "docudude.csproj"
