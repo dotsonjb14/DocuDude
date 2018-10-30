@@ -28,7 +28,7 @@ Please follow these steps to run locally
 
 ```
 rm -rf pub && dotnet publish -c Release -o pub
-sudo docker build --no-cache -t docudude pub
+sudo docker build --no-cache -t docudude -f built.Dockerfile pub
 sudo docker run -p 80:80 docudude
 ```
 
