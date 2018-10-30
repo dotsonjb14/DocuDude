@@ -23,7 +23,9 @@ If you ignore this warning, then you are a moron that deserves to get owned.
 
 Please follow these steps to run locally
 
-enter the docudude folder and run these commands
+1. Install docker
+1. Enter the docudude folder and run these commands
+
 ```
 rm -rf pub && dotnet publish -c Release -o pub
 sudo docker build --no-cache -t docudude pub
