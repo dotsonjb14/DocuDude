@@ -27,8 +27,6 @@ namespace docudude.Models
             {
                 list.AddRange((rawList ?? "").Split("|"));
             }
-
-            
         }
 
         private List<string> GetBucketList(WhiteListType bucketType)

@@ -8,7 +8,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\" />
     <Content Include="Dockerfile" CopyToPublishDirectory="always" />
-    <Content Include="builtDockerfile" CopyToPublishDirectory="always" />
+    <Content Include="built.Dockerfile" CopyToPublishDirectory="always" />
   </ItemGroup>
 
   <ItemGroup>
