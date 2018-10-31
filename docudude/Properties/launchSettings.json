@@ -24,7 +24,8 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "PDF_WHITELIST": "jdtest|jdtest2"
+        "PDF_WHITELIST": "jdtest|jdtest2",
+        "S3_REGION": "hello"
       }
     }
   }

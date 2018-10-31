@@ -14,6 +14,7 @@ namespace docudude
     {
         public static void Main(string[] args)
         {
+            Environment.SetEnvironmentVariable("s3:region", Environment.GetEnvironmentVariable("S3_REGION"));
             CreateWebHostBuilder(args).Build().Run();
         }
 

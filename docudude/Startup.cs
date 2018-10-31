@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using THT.AWS.Abstractions.Credentials;
 using THT.AWS.Abstractions.Options;
 using THT.AWS.Abstractions.S3;
@@ -25,6 +26,7 @@ namespace docudude
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<S3Options>(Configuration.GetSection("s3"));
+            
             services.AddTransient<ICrendentialsManager, CrendentialsManager>();
 
             if (Configuration.GetValue("IsLocal", false))
@@ -44,8 +46,9 @@ namespace docudude
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Whitelists whitelists)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Whitelists whitelists, IOptions<S3Options> options)
         {
+            Console.WriteLine(options.Value.Region);
             whitelists.SetWhiteList(
                 Environment.GetEnvironmentVariable("PDF_WHITELIST"),
                 WhiteListType.PDF
