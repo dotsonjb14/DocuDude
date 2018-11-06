@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using docudude.Models;
 
 namespace docudude.Repositories
@@ -5,6 +6,6 @@ namespace docudude.Repositories
     public interface IDocumentRepository
     {
         byte[] Transform(Input input, byte[] file);
-        byte[] Sign(byte[] source, SigningProperties signingProperties);
+        Task<byte[]> Sign(byte[] source, SigningProperties signingProperties);
     }
 }

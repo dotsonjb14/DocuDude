@@ -40,7 +40,7 @@ namespace docudude.Controllers
             var output = documentRepository.Transform(input, source);
 
             if(input.DoSign) {
-                source = documentRepository.Sign(source, input.SigningProperties);
+                source = await documentRepository.Sign(source, input.SigningProperties);
             }
 
             return File(output, "application/pdf", Guid.NewGuid().ToString() + ".pdf");
