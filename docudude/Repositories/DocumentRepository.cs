@@ -30,7 +30,7 @@ namespace docudude.Repositories
                 var sap = signer.GetSignatureAppearance();
 
                 sap.SetLocation(signingProperties.Location);
-                sap.SetReason("Certification");
+                sap.SetReason(signingProperties.Reason);
                 sap.SetReuseAppearance(false);
                 
                 var certData = await s3Repository.GetDocument(signingProperties.Bucket, signingProperties.Key);

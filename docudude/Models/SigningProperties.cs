@@ -6,5 +6,6 @@ namespace docudude.Models
         public string Key { get; set; }
         public string Password { get; set; }
         public string Location { get; set; }
+        public string Reason { get; set; } = "Certification";
     }
 }
