@@ -4,8 +4,10 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Signatures;
+using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -32,19 +34,25 @@ namespace docudude.Repositories
                 sap.SetReuseAppearance(false);
                 
                 var certData = await s3Repository.GetDocument(signingProperties.Bucket, signingProperties.Key);
-                var certificate = new X509Certificate2(certData, signingProperties.Password, X509KeyStorageFlags.Exportable);
+                
+                // code from https://stackoverflow.com/questions/12470498/how-to-read-the-pfx-file
+                using(var keyStream = new MemoryStream(certData))
+                {
+                    var store = new Pkcs12Store(keyStream, signingProperties.Password.ToCharArray());
 
-                var bouncyCert = DotNetUtilities.FromX509Certificate(certificate);
+                    string alias = store.Aliases.OfType<string>().First(x => store.IsKeyEntry(x));
 
-                var pk = DotNetUtilities.GetKeyPair(certificate.PrivateKey).Private;
+                    var privateKey = store.GetKey(alias).Key;
 
-                var chain = new Org.BouncyCastle.X509.X509Certificate[] { bouncyCert };
+                    var keyChain = store.GetCertificateChain(alias)
+                        .Select(x => x.Certificate).ToArray();
 
-                IExternalSignature externalSignature = new PrivateKeySignature(pk, DigestAlgorithms.SHA256);
+                    IExternalSignature externalSignature = new PrivateKeySignature(privateKey, DigestAlgorithms.SHA256);
 
-                signer.SignDetached(externalSignature, chain, null, null, null, 0, PdfSigner.CryptoStandard.CADES);
+                    signer.SignDetached(externalSignature, keyChain, null, null, null, 0, PdfSigner.CryptoStandard.CADES);
 
-                return outputStream.ToArray();
+                    return outputStream.ToArray();
+                }
             }
         }
 
