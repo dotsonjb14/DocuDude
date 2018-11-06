@@ -11,5 +11,6 @@ namespace docudude.Models
         public string SourceFile { get; set; }
         public List<InputStep> Steps { get; set; }
         public bool DoSign { get; set; }
+        public SigningProperties SigningProperties { get; set; }
     }
 }
