@@ -16,6 +16,14 @@ namespace docudude.Repositories
     public class DocumentRepository : IDocumentRepository
     {
         public readonly IS3Repository s3Repository;
+        public readonly IKSMRepository kSMRepository;
+        
+        public DocumentRepository(IS3Repository s3Repository, IKSMRepository kSMRepository)
+        {
+            this.s3Repository = s3Repository;
+            this.kSMRepository = kSMRepository;
+        }
+
         public async Task<byte[]> Sign(byte[] source, SigningProperties signingProperties)
         {
             using (var inputStream = new MemoryStream(source))
@@ -38,6 +46,15 @@ namespace docudude.Repositories
                 // code from https://stackoverflow.com/questions/12470498/how-to-read-the-pfx-file
                 using(var keyStream = new MemoryStream(certData))
                 {
+                    var passphrase = signingProperties.Password;
+
+                    if(signingProperties.KMSData != null)
+                    {
+                        // key is encrypted with KSM
+                        var key = await kSMRepository.GetKey(signingProperties.KMSData);
+                        passphrase = kSMRepository.DecryptData(passphrase, key);
+                    }
+
                     var store = new Pkcs12Store(keyStream, signingProperties.Password.ToCharArray());
 
                     string alias = store.Aliases.OfType<string>().First(x => store.IsKeyEntry(x));

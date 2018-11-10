@@ -40,6 +40,7 @@ namespace docudude
 
             services.AddTransient<IDocumentRepository, DocumentRepository>();
             services.AddTransient<IS3Repository, S3Repository>();
+            services.AddTransient<IKSMRepository, KSMRepository>();
             services.AddSingleton<Whitelists>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

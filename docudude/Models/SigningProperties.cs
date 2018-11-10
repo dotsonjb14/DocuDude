@@ -7,5 +7,6 @@ namespace docudude.Models
         public string Password { get; set; }
         public string Location { get; set; }
         public string Reason { get; set; } = "Certification";
+        public KMSData KMSData { get; set; }
     }
 }
