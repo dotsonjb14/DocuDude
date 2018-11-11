@@ -17,7 +17,7 @@ namespace docudude.Repositories
     {
         public readonly IS3Repository s3Repository;
         public readonly IKSMRepository kSMRepository;
-        
+
         public DocumentRepository(IS3Repository s3Repository, IKSMRepository kSMRepository)
         {
             this.s3Repository = s3Repository;
@@ -85,20 +85,29 @@ namespace docudude.Repositories
                 {
                     foreach(var step in input.Steps)
                     {
-                        var data = step.GetData<TextInputData>();
-                        float bottom = GetBottom(data, pdfDoc.GetPage(data.Page));
-
-                        var text = new Text(data.Content)
-                            .SetFontSize(data.FontSize);
-
-                        doc.Add(new Paragraph(text)
-                            .SetPageNumber(data.Page)
-                            .SetFixedPosition(data.Left, bottom, 500));
+                        if(step.Type == "text")
+                        {
+                            StampText(pdfDoc, doc, step);
+                        }
                     }
                 }
 
                 return outputStream.ToArray();
             }
+        }
+
+        private void StampText(PdfDocument pdfDoc, Document doc, InputStep step)
+        {
+            var data = step.GetData<TextInputData>();
+
+            float bottom = GetBottom(data, pdfDoc.GetPage(data.Page));
+
+            var text = new Text(data.Content)
+                .SetFontSize(data.FontSize);
+
+            doc.Add(new Paragraph(text)
+                .SetPageNumber(data.Page)
+                .SetFixedPosition(data.Left, bottom, 500));
         }
 
         private float GetBottom(TextInputData data, PdfPage page)

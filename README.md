@@ -5,6 +5,7 @@ Docudude is a document manipulation API meant to be run within the AWS ecosystem
 ## Features
 
 * Adding arbitrary text to documents
+* Digital signing
 
 ## Technologies
 
@@ -24,13 +25,7 @@ If you ignore this warning, then you are a moron that deserves to get owned.
 Please follow these steps to run locally
 
 1. Install docker
-1. Enter the docudude folder and run these commands
-
-```
-rm -rf pub && dotnet publish -c Release -o pub
-sudo docker build --no-cache -t docudude -f built.Dockerfile pub
-sudo docker run -p 80:80 docudude
-```
+1. Enter the docudude folder and run `dotnet run`
 
 
 ## Deploying

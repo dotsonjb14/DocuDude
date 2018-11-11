@@ -60,6 +60,11 @@ namespace docudude
                 WhiteListType.Image
             );
 
+            whitelists.SetWhiteList(
+                Environment.GetEnvironmentVariable("KEY_WHITELIST"),
+                WhiteListType.Key
+            );
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -5,13 +5,15 @@ namespace docudude.Models
     public enum WhiteListType
     {
         PDF,
-        Image
+        Image,
+        Key
     }
 
     public class Whitelists
     {
         public List<string> PDFBuckets { get; set; } = new List<string>();
         public List<string> ImageBuckets { get; set; } = new List<string>();
+        public List<string> KeyBuckets { get; set; } = new List<string>();
 
         public bool CanAccess(string bucket, WhiteListType whiteListType)
         {
@@ -38,6 +40,10 @@ namespace docudude.Models
             else if (bucketType == WhiteListType.Image)
             {
                 return ImageBuckets;
+            }
+            else if (bucketType == WhiteListType.Key)
+            {
+                return KeyBuckets;
             }
 
             return null;

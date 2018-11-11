@@ -30,9 +30,9 @@ namespace docudude.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Input input)
         {
-            if(!whitelists.CanAccess(input.SourceBucket, WhiteListType.PDF))
+            if(!CanDoThings(input))
             {
-                return Forbid();
+                return BadRequest(":(");
             }
 
             var source = await s3Repository.GetDocument(input.SourceBucket, input.SourceFile);
@@ -40,12 +40,25 @@ namespace docudude.Controllers
             var output = documentRepository.Transform(input, source);
 
             if(input.DoSign) {
-                source = await documentRepository.Sign(source, input.SigningProperties);
+                output = await documentRepository.Sign(output, input.SigningProperties);
             }
 
             return File(output, "application/pdf", Guid.NewGuid().ToString() + ".pdf");
         }
 
+        private bool CanDoThings(Input input)
+        {
+            if (!whitelists.CanAccess(input.SourceBucket, WhiteListType.PDF))
+            {
+                return false;
+            }
 
+            if(input.DoSign && !whitelists.CanAccess(input.SigningProperties.Bucket, WhiteListType.Key))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
